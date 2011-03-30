@@ -22,9 +22,12 @@ Jeweler::Tasks.new do |gem|
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
   gem.add_runtime_dependency 'crxmake', '>= 2.0.3'
+  gem.add_runtime_dependency 'rails', '>= 3.0.0'
   gem.add_development_dependency 'bundler', '~> 1.0.0'
   gem.add_development_dependency 'jeweler', '~> 1.5.2'
+  gem.add_development_dependency 'mocha', '~> 0.9.12'
   gem.add_development_dependency 'rcov', '>= 0'
+  gem.add_development_dependency 'sqlite3', '>= 1.3.3'
 end
 Jeweler::RubygemsDotOrgTasks.new
 
@@ -42,7 +45,7 @@ Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "new #{version}"
+  rdoc.title = "chromembed_rails #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end

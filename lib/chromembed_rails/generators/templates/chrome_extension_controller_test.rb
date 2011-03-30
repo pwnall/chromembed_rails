@@ -1,12 +1,11 @@
 require 'test_helper'
 
 class ChromeExtensionControllerTest < ActionController::TestCase
-  setup do
-    @config_var = config_vars(:app_uri)
+  test "should get the extension" do
+    get :show, :format => 'crx'
   end
   
-  test "cannot access config vars without authentication" do
-    get :index
-    assert_response :unauthorized    
+  test "should get the update file" do
+    get :update, :format => 'xml'
   end
 end

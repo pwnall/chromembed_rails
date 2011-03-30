@@ -26,6 +26,10 @@ module ModelClassMethods
   
     # The extension version listed in manifest.json.
     validates :version, :length => { :in => 0..64, :allow_nil => false }
+    
+    # The CRX file contents.
+    validates :crx_bits,
+              :length => { :in => 0..(64.megabytes), :allow_nil => false }
 
     extend ModelMetaclassMethods
     include ModelInstanceMethods
@@ -40,16 +44,6 @@ module ModelMetaclassMethods
     self.new.update_with_current_bits(
         'update_url' => chrome_extension_update_url)
   end
-
-  # Path to the extension files.
-  def extension_path
-    Rails.root.join 'desktop', 'chrome_extension'
-  end
-  
-  # Path to the private key used to sign the extension.
-  def key_path
-    Rails.root.join 'desktop', 'chrome_extension.pem'
-  end
 end  # module ChromembedRails::Model::ModelMetaclassMethods
 
 
@@ -61,13 +55,13 @@ module ModelInstanceMethods
   #   manifest_changes:: hash to be merged into the extension's manifest JSON;
   #                      'update_url' and 'version' might be good keys to change
   def update_with_current_bits(manifest_changes)
-    extension_path = self.class.extension_path
+    extension_path = ChromembedRails.extension_path
     manifest_path = File.join extension_path, 'manifest.json'
     manifest_json = ActiveSupport::JSON.decode File.read(manifest_path)
     manifest_json.merge! manifest_changes
     self.version = manifest_json['version']
 
-    key_path = self.class.key_path
+    key_path = ChromembedRails.key_path
     key = OpenSSL::PKey::RSA.new File.read(key_path)
     # Source: http://supercollider.dk/2010/01/calculating-chrome-extension-id-from-your-private-key-233
     alg = ["30819F300D06092A864886F70D010101050003818D00"].pack('H*')
