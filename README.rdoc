@@ -2,6 +2,29 @@
 
 Rails Engine for applications that are strongly coupled to Chrome extensions.
 
+== Usage
+
+Add the engine gem to your Gemfile
+
+    gem 'chromembed_rails', '>= 0.1.0'
+    
+Run the generator to get your application set up.
+
+    rails g chromembed_rails:all
+    
+Develop your Chrome extension in the desktop/chrome_extension directory. Alternatively, tweak config/initializers/chrome_extension.rb to reflect your extension's path. 
+
+You can use chrome_extension_path in your views, to prompt your users to download the extension.
+
+When you have an updated version of your extension that you'd like to push to your users, bump the version number in the extension's manifest.json. 
+
+== Features
+
+The engine adds the following routes to your application:
+
+* chrome_extension.crx serves your extension, readily packaged for installation 
+* chrome_extension/update.xml works with Chrome's auto-update engine
+
 == Contributing to chromembed_rails
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
@@ -14,6 +37,4 @@ Rails Engine for applications that are strongly coupled to Chrome extensions.
 
 == Copyright
 
-Copyright (c) 2011 Victor Costan. See LICENSE.txt for
-further details.
-
+Copyright (c) 2011 Victor Costan. See LICENSE.txt for further details.
