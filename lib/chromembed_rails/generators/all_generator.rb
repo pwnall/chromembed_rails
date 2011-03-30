@@ -26,9 +26,13 @@ class AllGenerator < Rails::Generators::Base
     copy_file 'chrome_extension_initializer.rb',
               File.join('config', 'initializers', 'chrome_extension.rb')
               
-    copy_file 'manifest.json',
+    copy_file File.join('desktop', 'chrome_extension', 'manifest.json'),
               File.join('desktop', 'chrome_extension', 'manifest.json')
-    template 'chrome_extension.pem.erb',
+    ['ruby16.png', 'ruby19.png', 'ruby128.png'].each do |view_name|
+      copy_file File.join('desktop', 'chrome_extension', 'images', view_name),
+                File.join('desktop', 'chrome_extension', 'images', view_name)
+    end
+    template File.join('desktop', 'chrome_extension.pem.erb'),
               File.join('desktop', 'chrome_extension.pem')
   end
 end  # class ChromembedRails::ConfigVarsGenerator

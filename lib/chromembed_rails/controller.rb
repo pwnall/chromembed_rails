@@ -1,4 +1,5 @@
 require 'action_controller'
+require 'crxmake'
 
 # :nodoc: namespace
 module ChromembedRails
@@ -19,7 +20,7 @@ module ControllerClassMethods
   #
   # Right now, this should be called from ChromeExtensionController. The
   # controller name is hardwired in other parts of the implementation.
-  def chrome_embed_controller
+  def chrome_extension_controller
     include ControllerInstanceMethods
   end
 end
@@ -28,13 +29,29 @@ end
 module ControllerInstanceMethods
   # GET /chrome_extension.crx
   def show
-    edit
-    render :text => @config_var.value
+    extension_data = ChromeExtensionCache.extension_data
+    send_data extension_data.crx_bits, :disposition => 'attachment',
+        :content_type => 'application/x-chrome-extension'
   end
 
   # GET /chrome_extension/update.xml
   def update
+    extension_data = ChromeExtensionCache.extension_data
+    render :text => update_xml(extension_data)
   end
+  
+  # Contents of the update XML document for an extension.
+  def update_xml(extension_data)
+    <<END_XML
+<?xml version='1.0' encoding='UTF-8'?>
+<gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>
+  <app appid='#{extension_data.appid}'>
+    <updatecheck codebase='#{chrome_extension_url}' version='#{extension_data.version}' />
+  </app>
+</gupdate>
+END_XML
+  end
+  private :update_xml
 end  # module ChromembedRails::Session::ControllerInstanceMethods
 
 ActionController::Base.send :include, ControllerMixin
