@@ -1,3 +1,5 @@
+require 'English'
+
 require 'active_record'
 
 # :nodoc: namespace
@@ -34,8 +36,9 @@ end  # module ChromembedRails::Model::ModelClassMethods
 # Included in the metaclass of models that call chrome_extension_cache_model.
 module ModelMetaclassMethods
   # ChromeExtensionCache entry for the latest extension bits.
-  def extension_data
-    self.new.update_with_current_bits
+  def extension_data(chrome_extension_update_url)
+    self.new.update_with_current_bits(
+        'update_url' => chrome_extension_update_url)
   end
 
   # Path to the extension files.
@@ -52,10 +55,16 @@ end  # module ChromembedRails::Model::ModelMetaclassMethods
 
 # Included in models that call chrome_extension_cache_model.
 module ModelInstanceMethods
-  def update_with_current_bits
+  # Updates this cache entry to reflect the current extension code.
+  #
+  # Args:
+  #   manifest_changes:: hash to be merged into the extension's manifest JSON;
+  #                      'update_url' and 'version' might be good keys to change
+  def update_with_current_bits(manifest_changes)
     extension_path = self.class.extension_path
     manifest_path = File.join extension_path, 'manifest.json'
     manifest_json = ActiveSupport::JSON.decode File.read(manifest_path)
+    manifest_json.merge! manifest_changes
     self.version = manifest_json['version']
 
     key_path = self.class.key_path
@@ -66,11 +75,20 @@ module ModelInstanceMethods
     self.appid = hash.unpack('C*').map{ |c| c < 97 ? c + 49 : c + 10 }.
                       pack('C*')
     
-    crx_path = Rails.root.join 'tmp', 'chrome_extension.crx'
-    CrxMake.make :ex_dir => extension_path, :pkey => key_path,
-        :crx_output => crx_path, :verbose => true
+    tmp_path = Rails.root.join 'tmp', "chrome_ext_#{Time.now.to_f}_#{$PID}"
+    ext_path = File.join tmp_path, 'chrome_extension'
+    FileUtils.mkdir_p ext_path
+    FileUtils.cp_r File.join(extension_path, '.'), ext_path
+    man_path = File.join ext_path, 'manifest.json'
+    File.open(man_path, 'wb') do |f|
+      f.write ActiveSupport::JSON.encode manifest_json
+    end
+    
+    crx_path = File.join tmp_path, 'chrome_extension.crx'
+    CrxMake.make :ex_dir => ext_path, :pkey => key_path,
+                 :crx_output => crx_path, :verbose => false
     self.crx_bits = File.read crx_path
-    # File.unlink crx_path
+    FileUtils.rm_r tmp_path
     
     self
   end

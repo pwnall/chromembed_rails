@@ -29,14 +29,16 @@ end
 module ControllerInstanceMethods
   # GET /chrome_extension.crx
   def show
-    extension_data = ChromeExtensionCache.extension_data
+    extension_data =
+        ChromeExtensionCache.extension_data(chrome_extension_update_url)
     send_data extension_data.crx_bits, :disposition => 'attachment',
         :content_type => 'application/x-chrome-extension'
   end
 
   # GET /chrome_extension/update.xml
   def update
-    extension_data = ChromeExtensionCache.extension_data
+    extension_data =
+        ChromeExtensionCache.extension_data(chrome_extension_update_url)
     render :text => update_xml(extension_data)
   end
   
