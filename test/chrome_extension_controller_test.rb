@@ -9,10 +9,20 @@ require 'chromembed_rails/generators/templates/chrome_extension_controller_test.
 class ChromeExtensionControllerExtendedTest < ActionController::TestCase
   tests ChromeExtensionController
 
-  setup do
+  test "should get the extension" do
+    get :show, :format => 'crx'
+    assert_response :success
+    assert_equal 'Cr24', response.body[0, 4]
+    assert response.body.include?("PK\x03\x04"), 'crx does not contain a ZIP'
   end
-
-  test "write something here" do
-    assert true
+  
+  test "should get the update file" do
+    get :update, :format => 'xml'
+    assert_response :success
+    assert_select 'gupdate' do
+      assert_select "app[appid=mmdhdbifokakcihplakafeifahobiijk]" do
+        assert_select 'updatecheck[codebase=http://test.host/chrome_extension.crx][version=1.0.0]'
+      end
+    end
   end
 end
