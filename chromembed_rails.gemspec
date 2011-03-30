@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "chromembed_rails.gemspec",
     "lib/chromembed_rails.rb",
     "lib/chromembed_rails/controller.rb",
     "lib/chromembed_rails/engine.rb",
@@ -34,16 +35,18 @@ Gem::Specification.new do |s|
     "lib/chromembed_rails/generators/templates/chrome_extension_controller.rb",
     "lib/chromembed_rails/generators/templates/chrome_extension_controller_test.rb",
     "lib/chromembed_rails/generators/templates/chrome_extension_initializer.rb",
+    "lib/chromembed_rails/generators/templates/desktop/chrome_extension.pem.erb",
     "lib/chromembed_rails/generators/templates/desktop/chrome_extension/images/ruby128.png",
     "lib/chromembed_rails/generators/templates/desktop/chrome_extension/images/ruby16.png",
     "lib/chromembed_rails/generators/templates/desktop/chrome_extension/images/ruby19.png",
+    "lib/chromembed_rails/generators/templates/desktop/chrome_extension/manifest.json",
     "lib/chromembed_rails/model.rb",
     "lib/chromembed_rails/routes.rb"
   ]
   s.homepage = %q{http://github.com/pwnall/chromembed_rails}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.0}
+  s.rubygems_version = %q{1.5.3}
   s.summary = %q{Serves a Chrome extension embedded in a Rails application}
 
   if s.respond_to? :specification_version then
