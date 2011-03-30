@@ -1,0 +1,22 @@
+{
+  "name": "Rails-backed",
+  "version": "1.0.0",
+  "description": "My awesome Rails-backed extension",
+  "icons": {
+    "16": "images/ruby16.png",
+    "128": "images/ruby128.png",
+  },
+  
+  "incognito": "split",
+  "minimum_chrome_version": "5.0.316.0",
+  "permissions": [
+    "geolocation",
+    "notifications",
+    "unlimitedStorage"
+  ],
+  
+  "browser_action": {
+    "default_icon": "images/ruby19.png",
+    "default_title": "Hi"
+  },
+}
