@@ -3,9 +3,9 @@ require 'openssl'
 require 'rails'
 
 # :nodoc: namespace
-module ChromembedRails
+module Chromembed
 
-# Name chosen to get chromembed_rails:all
+# rails g chromembed:all
 class AllGenerator < Rails::Generators::Base
   source_root File.expand_path("../templates", __FILE__)
 
@@ -35,6 +35,6 @@ class AllGenerator < Rails::Generators::Base
     template File.join('desktop', 'chrome_extension.pem.erb'),
               File.join('desktop', 'chrome_extension.pem')
   end
-end  # class ChromembedRails::ConfigVarsGenerator
+end  # class Chromembed::AllGenerator
 
-end  # namespace ChromembedRails
+end  # namespace Chromembed

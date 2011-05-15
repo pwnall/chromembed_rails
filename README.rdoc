@@ -21,7 +21,7 @@ Add the engine gem to your Gemfile
     
 Run the generator to get your application set up.
 
-    rails g chromembed_rails:all
+    rails g chromembed:all
     
 Develop your Chrome extension in the desktop/chrome_extension directory. Alternatively, tweak config/initializers/chrome_extension.rb to reflect your extension's path. 
 

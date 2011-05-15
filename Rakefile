@@ -19,15 +19,7 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{Ruby on Rails engine for Web applications that are strongly coupled with Chrome extensions}
   gem.email = "costan@gmail.com"
   gem.authors = ["Victor Costan"]
-  # Include your dependencies below. Runtime dependencies are required when using your gem,
-  # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
-  gem.add_runtime_dependency 'crxmake', '>= 2.0.3'
-  gem.add_runtime_dependency 'rails', '>= 3.0.0'
-  gem.add_development_dependency 'bundler', '~> 1.0.0'
-  gem.add_development_dependency 'jeweler', '~> 1.5.2'
-  gem.add_development_dependency 'mocha', '~> 0.9.12'
-  gem.add_development_dependency 'rcov', '>= 0'
-  gem.add_development_dependency 'sqlite3', '>= 1.3.3'
+  # Dependencies in Gemfile.
 end
 Jeweler::RubygemsDotOrgTasks.new
 
