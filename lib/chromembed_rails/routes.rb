@@ -1,13 +1,8 @@
 require 'action_pack'
 
-# :nodoc: namespace
-module ChromembedRails
-
-# :nodoc: namespace
-module Routes
-
-# :nodoc: mixed into ActionPack's route mapper.
-module MapperMixin
+# :nodoc: adding the chrome_extension method to the route mapper.
+class ActionDispatch::Routing::Mapper
+  # Installs the routes for serving an extension
   def chrome_extension
     get 'chrome_extension.crx' => 'chrome_extension#show',
         :as => :chrome_extension
@@ -15,9 +10,3 @@ module MapperMixin
         :as => :chrome_extension_update
   end
 end
-
-ActionDispatch::Routing::Mapper.send :include, MapperMixin
-
-end  # namespace ChromembedRails::Routes
-
-end  # namespace ChromembedRails
