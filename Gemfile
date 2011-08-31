@@ -2,7 +2,7 @@ source "http://rubygems.org"
 # Add dependencies required to use your gem here.
 # Example:
 gem "crxmake", ">= 2.0.3"
-gem "rails", ">= 3.1.0.rc4"
+gem "rails", ">= 3.1.0"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
